@@ -57,7 +57,7 @@ if `run_cleaning' == 1 {
     di as text "Running data cleaning..."
 
     * PB observations cleaning (main dataset)
-    do "${gg_shared_clean}/datap_pbobs_cleaning_4s_new.do"
+    do "${gg_shared_clean}/02_clean_pb_observations.do"
 
     * BESSI cleaning
     do "${gg_shared_clean}/datap_bessi_cleaning_new.do"
@@ -102,7 +102,7 @@ if `run_main' == 1 {
     di as text _n "Running main analyses..."
 
     * Main FE regressions (peer and self evaluations)
-    do "${gg_p1_analysis}/FE_regressions.do"
+    do "${gg_p1_analysis}/03_fe_regressions.do"
 
     * BESSI peer evaluations
     do "${gg_p1_analysis}/analysis_bessi_peer_gen.do"

@@ -18,7 +18,7 @@
         - areg (built-in; used for single high-dimensional FE)
 
     INPUTS:
-        - $cleanpb/class/pb_4s_all_new.dta (produced by datap_pbobs_cleaning_4s_new.do)
+        - $cleanpb/class/pb_4s_all_new.dta (produced by 02_clean_pb_observations.do)
         - ${gg_shared}/analysis_dataprep.do (defines $PB_out, $controls_*, $gendervar,
                                              class_fixed, stu_fixed, obs_fixed)
 
