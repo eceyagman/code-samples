@@ -842,33 +842,4 @@ file write fh _n "\end{landscape}"
 file close fh
 
 
-********************************************************************************
-*                           END OF ACTIVE CODE                                 *
-*   The following sections contain archived/deprecated regression code.        *
-*   These are retained for reference but are not executed.                     *
-********************************************************************************
-
-/*
-================================================================================
-ARCHIVED CODE: Older regression specifications
-================================================================================
-
-The code below contains earlier versions of regression specifications that have
-been superseded by the main analysis above. They are preserved here for:
-1. Reference to earlier estimation strategies
-2. Reproducibility of prior results
-3. Documentation of analytical evolution
-
-These sections include:
-- Estimation Strategy 4: Peer score deviation analysis
-- Estimation Strategy 3: Student FE and Peer FE specifications (females/males)
-- Estimation Strategy 2: Classroom FE with interaction terms
-- Estimation Strategy 1: Various clustering and FE combinations
-- 7-model specifications with EO variables
-- School FE and complexity FE specifications
-
-To execute any of these sections, remove the block comment markers.
-================================================================================
-*/
-
 * END OF FILE
