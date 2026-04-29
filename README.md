@@ -15,17 +15,21 @@ A library of reusable Stata programs developed for the gender gap analysis. Defi
 - `validate_merge` — diagnostic checks on merge results, with optional thresholds for expected match rates
 - `validate_observations` — observation count checkpoints with optional minimum-N assertions
 
-Demonstrates: reusable program design, defensive coding with validation checkpoints, modular Stata workflow.
 
 ### `FE_regressions.do`
 Main fixed-effects regressions for the gender gap paper, examining how student gender, peer gender, and their interaction affect peer evaluations of socioemotional skills (Pentabilities).
 
 Includes: high-dimensional fixed effects (`reghdfe`), classroom-level fixed effects, robust and clustered standard errors, multiple specifications per outcome, automated export of publication-ready LaTeX tables (full, appendix, and compact versions) using `esttab` and `file write`.
 
-Demonstrates: end-to-end analysis-to-publication pipeline, replicable table generation, multiple comparison strategies (Peer FE vs. Student FE).
+
+### `datap_pbobs_cleaning_4s_new.do`
+End-to-end cleaning script that merges Pentabilities behavioural observations from four sources (peer, self, teacher, and external research observers) into a single analysis-ready dataset.
+
+Includes: harmonization across observation types, term-level splits, merges with student / observer / teacher characteristics, generation of standardized scores via custom `PBMeasure_*` ado files, gender variable construction and pairings, aggregated and deviation scores, and final sample restrictions. Real observer names have been replaced with anonymized IDs (`EO_001`..`EO_018`) for public release; all logic is preserved.
+
 
 ## Notes
 
 - Data files referenced in these scripts are not included; they are project-specific and require institutional access.
-- Path globals (`$cleanpb`, `$path_ol_gen`, `${gg_shared}`) are defined in upstream master and paths do-files.
+- Path globals (`$cleanpb`, `$path_ol_gen`, `${gg_shared}`, `$intpbobs`, `$cleanids`, `$Rclean`) are defined in upstream master and paths do-files.
 - Author: Ece Yagman.
