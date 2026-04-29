@@ -15,11 +15,12 @@
 
     DEPENDENCIES:
         - estout (for esttab)
-        - reghdfe (for high-dimensional fixed effects)
+        - areg (built-in; used for single high-dimensional FE)
 
     INPUTS:
-        - $cleanpb/class/pb_4s_all_new.dta (main analysis dataset)
-        - ${pathgit}/cat/code/analysis/gender gap/third paper/analysis_dataprep.do
+        - $cleanpb/class/pb_4s_all_new.dta (produced by datap_pbobs_cleaning_4s_new.do)
+        - ${gg_shared}/analysis_dataprep.do (defines $PB_out, $controls_*, $gendervar,
+                                             class_fixed, stu_fixed, obs_fixed)
 
     OUTPUTS:
         - $path_ol_gen/tables/self_`out'_full.tex (self-evaluation tables)
@@ -45,7 +46,22 @@
         - Robust standard errors for self evaluations
 */
 
+version 17
+clear all
+set more off
 
+********************************************************************************
+*                        1. SETUP                                              *
+********************************************************************************
+* Load the main analysis dataset once, run dataprep, save to a tempfile that
+* every subsection below restores from. Avoids five redundant disk reads and
+* five redundant calls to analysis_dataprep.do.
+
+use "$cleanpb/class/pb_4s_all_new.dta", clear
+do "${gg_shared}/analysis_dataprep.do"
+
+tempfile prepped
+save `prepped'
 
 ********************************************************************************
 *                        2. SELF-EVALUATIONS ANALYSIS                          *
@@ -55,8 +71,7 @@
 * 2.1 Full specification: cluster at individual level with classroom FE
 *------------------------------------------------------------------------------*
 
-use "$cleanpb/class/pb_4s_all_new.dta", clear
-do "${gg_shared}/analysis_dataprep.do"
+use `prepped', clear
 
 * Keep only SELF evaluations
 keep if pb_type == "SELF"
@@ -181,8 +196,7 @@ foreach out in $PB_out {
 * 2.2 Compact specification: all 5 domains in one table
 *------------------------------------------------------------------------------*
 
-use "$cleanpb/class/pb_4s_all_new.dta", clear
-do "${gg_shared}/analysis_dataprep.do"
+use `prepped', clear
 
 * Keep only SELF evaluations
 keep if pb_type == "SELF"
@@ -320,8 +334,7 @@ file close fh
 * 3.1 Full specification by domain
 *------------------------------------------------------------------------------*
 
-use "$cleanpb/class/pb_4s_all_new.dta", clear
-do "${gg_shared}/analysis_dataprep.do"
+use `prepped', clear
 
 * Keep only PEER evaluations
 keep if pb_type == "CO"
@@ -492,8 +505,7 @@ foreach out in $PB_out {
 * 3.2 Compact peer regressions: all 5 domains in one table
 *------------------------------------------------------------------------------*
 
-use "$cleanpb/class/pb_4s_all_new.dta", clear
-do "${gg_shared}/analysis_dataprep.do"
+use `prepped', clear
 
 * Keep only Peer evaluations
 keep if pb_type == "CO"
@@ -646,8 +658,7 @@ file close fh
 * 3.3 Peer FE vs Student FE comparison: all 5 domains
 *------------------------------------------------------------------------------*
 
-use "$cleanpb/class/pb_4s_all_new.dta", clear
-do "${gg_shared}/analysis_dataprep.do"
+use `prepped', clear
 
 keep if pb_type == "CO"
 

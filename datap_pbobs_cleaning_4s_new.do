@@ -42,6 +42,10 @@
 */
 ********************************************************************************
 
+version 17
+clear all
+set more off
+
 ********************************************************************************
 *                         PROGRAM DEFINITIONS                                  *
 ********************************************************************************
@@ -809,18 +813,12 @@ merge m:1 schlid studid using `teacher_means', keep(match master) nogen
 *---------------------------------------------------------------------------
 preserve
     keep if pb_type == "TEACHER"
-    keep schlid studid tch_male s_std_autonomy s_std_cooperation s_std_emotion ///
+    keep schlid studid tch_fem s_std_autonomy s_std_cooperation s_std_emotion ///
          s_std_responsibility s_std_thinking
 
-    gen_scores_by_gender tch, scorevar(s_std) gendervar(tch_male) byvar(schlid studid) ///
+    * Pass tch_fem (==1 for female) so program's F/M suffixes match the values
+    gen_scores_by_gender tch, scorevar(s_std) gendervar(tch_fem) byvar(schlid studid) ///
         femlbl("Female Teacher Score") malelbl("Male Teacher Score")
-
-    * Note: Program creates tchF_ and tchM_ but we need to swap since tch_male==0 is female
-    foreach d of local dimensions {
-        rename tchF_`d' temp_`d'
-        rename tchM_`d' tchF_`d'
-        rename temp_`d' tchM_`d'
-    }
 
     duplicates drop studid, force
 
